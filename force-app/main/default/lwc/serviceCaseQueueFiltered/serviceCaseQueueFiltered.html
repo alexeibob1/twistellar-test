@@ -14,7 +14,9 @@
                 <template for:each={cases.data} for:item="caseItem">
                     <tr key={caseItem.Id}>
                         <td>
-                            <div class="slds-truncate">{caseItem.CaseNumber}</div>
+                            <div class="slds-truncate">
+                                <a onclick={navigateToCaseRecord} data-caseid={caseItem.Id}>{caseItem.CaseNumber}</a>
+                            </div>
                         </td>
                         <td>
                             <div class="slds-truncate">{caseItem.Owner.FirstName} {caseItem.Owner.LastName}</div>

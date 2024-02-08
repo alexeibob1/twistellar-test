@@ -1,4 +1,5 @@
 import { LightningElement, wire, api } from 'lwc';
+import { NavigationMixin } from 'lightning/navigation';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 
@@ -22,9 +23,20 @@ const COLUMNS = [
     { label: 'Created at', type: 'date' },
 ];
 
-export default class ServiceCaseQueueFiltered extends LightningElement {
+export default class ServiceCaseQueueFiltered extends NavigationMixin(LightningElement) {
     columns = COLUMNS;
 
     @wire(getUserCases, {})
     cases;
+
+    navigateToCaseRecord(event) {
+        this[NavigationMixin.Navigate]({
+            type: 'standard__recordPage',
+            attributes: {
+                recordId: event.target.dataset.caseid,
+                objectApiName: 'Case',
+                actionName: 'view',
+            },
+        });
+    }
 }

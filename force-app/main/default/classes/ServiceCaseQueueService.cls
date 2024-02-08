@@ -24,7 +24,7 @@ public inherited sharing class ServiceCaseQueueService {
             ) AND OwnerId != :currentUserId
             WITH SECURITY_ENFORCED
             ORDER BY OwnerId ASC, Priority ASC, CreatedDate DESC
-            LIMIT :caseRemainder
+            LIMIT :casesRemainder
         ];
 
         currentUserCases.addAll(othersUserCases);
