@@ -1,5 +1,5 @@
 <template>
-    <table class="slds-table">
+    <table aria-multiselectable="true" class="slds-table">
         <thead>
             <tr>
                 <template for:each={columns} for:item="column">
@@ -11,7 +11,25 @@
         </thead>
         <tbody>
             <template lwc:if={cases.data}>
-
+                <template for:each={cases.data} for:item="caseItem">
+                    <tr key={caseItem.Id}>
+                        <td>
+                            <div class="slds-truncate">{caseItem.CaseNumber}</div>
+                        </td>
+                        <td>
+                            <div class="slds-truncate">{caseItem.Owner.FirstName} {caseItem.Owner.LastName}</div>
+                        </td>
+                        <td>
+                            <div class="slds-truncate">{caseItem.Status}</div>
+                        </td>
+                        <td>
+                            <div class="slds-truncate">{caseItem.Priority}</div>
+                        </td>
+                        <td>
+                            <div class="slds-truncate">{caseItem.Origin}</div>
+                        </td>
+                    </tr>
+                </template>
             </template>
             <template lwc:else>
                 <tr>
