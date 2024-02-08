@@ -1,12 +1,27 @@
 <template>
-    <lightning-card>
-        <template if:true={cases.data}>
-            <lightning-datatable
-                key-field="Id"
-                data={cases.data}
-                columns={columns}
-            >
-           </lightning-datatable>
-        </template>
-    </lightning-card>
-</template> 
+    <table class="slds-table">
+        <thead>
+            <tr>
+                <template for:each={columns} for:item="column">
+                    <th class="" scope="col" key={column.fieldName}>
+                        <div class="slds-truncate" title={column.label}>{column.label}</div>
+                    </th>
+                </template>
+            </tr>
+        </thead>
+        <tbody>
+            <template lwc:if={cases.data}>
+
+            </template>
+            <template lwc:else>
+                <tr>
+                    <th colspan={columns.length}>
+                        <div class="slds-truncate slds-align_absolute-center">
+                            No available data
+                        </div>
+                    </th>
+                </tr>
+            </template>
+        </tbody>
+    </table>
+</template>
