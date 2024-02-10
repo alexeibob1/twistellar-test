@@ -1,61 +1,68 @@
 <template>
-    <table aria-multiselectable="true" class="slds-table">
-        <thead>
-            <tr>
-                <template for:each={columns} for:item="column">
-                    <th class="" scope="col" key={column.fieldName}>
-                        <div class="slds-truncate" title={column.label}>{column.label}</div>
-                    </th>
+    <div class="slds-is-relative">
+        <div class="spinner">
+            <template lwc:if={isComponentUpdating}>
+                <lightning-spinner alternative-text="Loading" variant="brand" size="large"></lightning-spinner>
+            </template>
+        </div>
+        <table aria-multiselectable="true" class="slds-table">
+            <thead>
+                <tr>
+                    <template for:each={columns} for:item="column">
+                        <th class="" scope="col" key={column.fieldName}>
+                            <div class="slds-truncate" title={column.label}>{column.label}</div>
+                        </th>
+                    </template>
+                </tr>
+            </thead>
+            <tbody>
+                <template lwc:if={cases.data}>
+                    <template for:each={cases.data} for:item="caseItem">
+                        <tr key={caseItem.Id}>
+                            <td>
+                                <div class="slds-truncate">
+                                    <a onclick={navigateToCaseRecord} data-caseid={caseItem.Id}>{caseItem.CaseNumber}</a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate">{caseItem.Owner.FirstName} {caseItem.Owner.LastName}</div>
+                            </td>
+                            <td>
+                                <template lwc:if={statuses.data}>
+                                    <lightning-combobox 
+                                        variant = "label-hidden"
+                                        name="status"
+                                        value={caseItem.Status}
+                                        placeholder="Select Case Status"
+                                        options={statuses.data.values}
+                                        data-caseid={caseItem.Id}
+                                        onchange={handleStatusChange}>
+                                    </lightning-combobox>
+                                </template>
+                                <template lwc:else>
+                                    <div class="slds-truncate">{caseItem.Status}</div>
+                                </template>
+                                
+                            </td>
+                            <td>
+                                <div class="slds-truncate">{caseItem.Priority}</div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate">{caseItem.Origin}</div>
+                            </td>
+                        </tr>
+                    </template>
                 </template>
-            </tr>
-        </thead>
-        <tbody>
-            <template lwc:if={cases.data}>
-                <template for:each={cases.data} for:item="caseItem">
-                    <tr key={caseItem.Id}>
-                        <td>
-                            <div class="slds-truncate">
-                                <a onclick={navigateToCaseRecord} data-caseid={caseItem.Id}>{caseItem.CaseNumber}</a>
+                <template lwc:else>
+                    <tr>
+                        <th colspan={columns.length}>
+                            <div class="slds-truncate slds-align_absolute-center">
+                                No available data
                             </div>
-                        </td>
-                        <td>
-                            <div class="slds-truncate">{caseItem.Owner.FirstName} {caseItem.Owner.LastName}</div>
-                        </td>
-                        <td>
-                            <template lwc:if={statuses.data}>
-                                <lightning-combobox variant = "label-hidden"
-                                    name="status"
-                                    value={caseItem.Status}
-                                    placeholder="Select Case Status"
-                                    options={statuses.data.values}>
-                                </lightning-combobox>
-                            </template>
-                            <template lwc:else>
-                                <div class="slds-truncate">{caseItem.Status}</div>
-                            </template>
-                            
-                        </td>
-                        <td>
-                            <div class="slds-truncate">{caseItem.Priority}</div>
-                        </td>
-                        <td>
-                            <div class="slds-truncate">{caseItem.Origin}</div>
-                        </td>
-                        <td>
-                            <div class="slds-truncate">{caseItem.CreatedDate}</div>
-                        </td>
+                        </th>
                     </tr>
                 </template>
-            </template>
-            <template lwc:else>
-                <tr>
-                    <th colspan={columns.length}>
-                        <div class="slds-truncate slds-align_absolute-center">
-                            No available data
-                        </div>
-                    </th>
-                </tr>
-            </template>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </template>
