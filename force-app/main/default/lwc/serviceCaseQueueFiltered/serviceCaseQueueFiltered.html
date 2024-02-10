@@ -5,8 +5,19 @@
                 <lightning-spinner alternative-text="Loading" variant="brand" size="large"></lightning-spinner>
             </template>
         </div>
+        
         <table aria-multiselectable="true" class="slds-table">
             <thead>
+                <tr>
+                    <th colspan={columns.length}>
+                        <label for="refresh-btn"></label>
+                        <button class="slds-button slds-button_icon slds-button_icon-border" title="Refresh" id="refresh-btn" onclick={handleRefresh} style="float: right">
+                            <svg class="slds-button__icon" aria-hidden="true">
+                                <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.28.0#refresh"></use>
+                            </svg>
+                        </button>
+                    </th>
+                </tr>
                 <tr>
                     <template for:each={columns} for:item="column">
                         <th class="" scope="col" key={column.fieldName}>

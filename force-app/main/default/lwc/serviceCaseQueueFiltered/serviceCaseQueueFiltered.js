@@ -86,4 +86,11 @@ export default class ServiceCaseQueueFiltered extends NavigationMixin(LightningE
                 });
             });
     }
+
+    handleRefresh() {
+        this.isComponentUpdating = true;
+        refreshApex(this.cases).finally(() => {
+            this.isComponentUpdating = false;
+        });
+    }
 }
