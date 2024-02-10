@@ -22,7 +22,18 @@
                             <div class="slds-truncate">{caseItem.Owner.FirstName} {caseItem.Owner.LastName}</div>
                         </td>
                         <td>
-                            <div class="slds-truncate">{caseItem.Status}</div>
+                            <template lwc:if={statuses.data}>
+                                <lightning-combobox variant = "label-hidden"
+                                    name="status"
+                                    value={caseItem.Status}
+                                    placeholder="Select Case Status"
+                                    options={statuses.data.values}>
+                                </lightning-combobox>
+                            </template>
+                            <template lwc:else>
+                                <div class="slds-truncate">{caseItem.Status}</div>
+                            </template>
+                            
                         </td>
                         <td>
                             <div class="slds-truncate">{caseItem.Priority}</div>
