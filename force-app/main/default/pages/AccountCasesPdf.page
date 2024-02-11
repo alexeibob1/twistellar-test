@@ -1,6 +1,63 @@
-<apex:page>
-<!-- Begin Default Content REMOVE THIS -->
-<h1>Congratulations</h1>
-This is your new Page
-<!-- End Default Content REMOVE THIS -->
+<apex:page controller="AccountCasesPdfCtrl" renderAs="pdf" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false">
+    <html> 
+        <head>
+            <style>
+                @page {
+                    size: letter;
+                    margin: 10mm;
+                    @top-center {
+                        content: "Cases opened during the previous week";
+                    }
+                    @bottom-center {
+                        content: "Page " counter(page) " of " counter(pages);
+                    }
+                }
+                .page-break {
+                    display: block;
+                    page-break-after: always;
+                }
+                body {
+                    font-family: 'Times New Roman', Times, serif;
+                }
+            </style>
+        </head>
+        <body>
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            Account Name
+                        </th>
+                        <th>
+                            Account Owner Name
+                        </th>
+                        <th>
+                            Case Number
+                        </th>
+                        <th>
+                            Case Status
+                        </th>
+                        <th>
+                            Case Priority
+                        </th>
+                        <th>
+                            Case Origin
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <apex:repeat var="case" value="{!accountCasesPrevWeek}">
+                        <tr>
+                            <td>{! case.Account.Name }</td>
+                            <td>{! case.Account.Owner.Name }</td>
+                            <td>{! case.CaseNumber }</td>
+                            <td>{! case.Status }</td>
+                            <td>{! case.Priority }</td>
+                            <td>{! case.Origin }</td>
+                        </tr>
+                    </apex:repeat>
+                </tbody>
+            </table>
+        </body>
+    </html>
 </apex:page>
